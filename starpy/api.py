@@ -70,11 +70,11 @@ class GetStars(StarPyMae):
 
     def find_pilots_from(self, movel):
         if movel == self.VEHICLES:
-            li2 = self.get_vehicles()
+            vm = self.get_vehicles()
         else:
-            li2 = self.get_starships()
+            vm = self.get_starships()
 
-        v, page, l, li2 = li2, 1, [], []
+        v, page, l, li2 = vm, 1, [], []
         while v['next'] is not None:
             v = v['results']
             for i in range(len(v)):
