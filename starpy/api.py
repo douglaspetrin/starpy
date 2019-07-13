@@ -68,13 +68,14 @@ class GetStars(StarPyMae):
         """
         return self.get_starships(rid)
 
-    def _find_pilots_from(self, machine):
-        if machine == self.VEHICLES:
+    def _find_pilots_from_li(self, transport):
+        """ Versão do tipo lista """
+        if transport == self.VEHICLES:
             vm = self.get_vehicles()
         else:
             vm = self.get_starships()
 
-        v, page, l, li2 = vm, 1, [], []
+        v, page, l = vm, 1, []
         while v['next'] is not None:
             v = v['results']
             for i in range(len(v)):
@@ -87,13 +88,11 @@ class GetStars(StarPyMae):
                             {'max_speed': v[i]['max_atmosphering_speed']}
                         ]
                     ]
-                    lista = v[i]['pilots'], v[i]['name'], v[i]['max_atmosphering_speed'], 'i', i
                     l.append(li) # python only
-                    li2.append(lista) # pandas approach
             page += 1
-            v = self.get_next_page(machine, page)
+            v = self.get_next_page(transport, page)
 
-        v = self.get_next_page(machine, page)['results']
+        v = self.get_next_page(transport, page)['results']
         for j in range(len(v)):
             if v[j]['pilots'] and v[j]['max_atmosphering_speed']:
                 li = [
@@ -104,34 +103,64 @@ class GetStars(StarPyMae):
                         {'max_speed': v[j]['max_atmosphering_speed']}
                     ]
                 ]
-                lista = v[j]['pilots'], v[j]['name'], v[j]['max_atmosphering_speed'], 'j', j
                 l.append(li)
+        return l
+
+    def _find_pilots_from_df(self, transport):
+        """ Versão do tipo Dataframe """
+        if transport == self.VEHICLES:
+            vm = self.get_vehicles()
+        else:
+            vm = self.get_starships()
+
+        v, page, li2 = vm, 1, []
+        while v['next'] is not None:
+            v = v['results']
+            for i in range(len(v)):
+                if v[i]['pilots']:
+                    lista = v[i]['pilots'], v[i]['name'], v[i]['max_atmosphering_speed'], 'i', i
+                    li2.append(lista)
+            page += 1
+            v = self.get_next_page(transport, page)
+
+        v = self.get_next_page(transport, page)['results']
+        for j in range(len(v)):
+            if v[j]['pilots'] and v[j]['max_atmosphering_speed']:
+                lista = v[j]['pilots'], v[j]['name'], v[j]['max_atmosphering_speed'], 'j', j
                 li2.append(lista)
-        print('Não existem mais pilotos')
-        return l, li2
+        return li2
 
     def find_pilots_from_v(self):
-        return self._find_pilots_from(self.VEHICLES)
+        return self._find_pilots_from_df(self.VEHICLES)
 
     def find_pilots_from_s(self):
-        return self._find_pilots_from(self.STAR_SHIPS)
+        return self._find_pilots_from_df(self.STAR_SHIPS)
 
-    def _find_fastest_m(self, machine):
+    def _find_fastest_df(self, transport):
         """ Cria DataFrame para fácil manipulação """
-
-        l1, l2 = self._find_pilots_from(machine) # escolher qual abordagem usar (Pandas ou não pandas)
-        df = pd.DataFrame(l2)
-        df[2].replace(regex=True, inplace=True, to_replace='\D', value=r'0')
-        df[2] = pd.to_numeric(df[2])
+        df = self._df_of_transport(transport)
         return df[2].nlargest(3).to_dict()
+
+    def _find_fastest_li(self, transport):
+        """ Obsoleto? """
+        pass
 
     def find_fastest_v(self):
         """ Encontra veículos mais rápidos e que tenham pilotos """
-        return self._find_fastest_m(self.VEHICLES)
+        return self._find_fastest_df(self.VEHICLES)
 
     def find_fastest_s(self):
         """ Encontra naves mais rápidas e que tenham pilotos """
-        return self._find_fastest_m(self.STAR_SHIPS)
+        return self._find_fastest_df(self.STAR_SHIPS)
+
+    def _df_of_transport(self, transport):
+        """ Cria DataFrame para fácil manipulação """
+
+        l2 = self._find_pilots_from_df(transport)
+        df = pd.DataFrame(l2)
+        df[2].replace(regex=True, inplace=True, to_replace='\D', value=r'0')
+        df[2] = pd.to_numeric(df[2])
+        return df
 
 
 s = GetStars()
