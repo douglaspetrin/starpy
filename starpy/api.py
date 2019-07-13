@@ -1,5 +1,6 @@
 import requests
 import pandas as pd
+import fire
 
 class StarPyMae(object):
 
@@ -122,7 +123,7 @@ class GetStars(StarPyMae):
         df = pd.DataFrame(l2)
         df[2].replace(regex=True, inplace=True, to_replace='\D', value=r'0')
         df[2] = pd.to_numeric(df[2])
-        return df[2].nlargest(3)
+        return df[2].nlargest(3).to_dict()
 
     def find_fastest_v(self):
         """ Encontra veículos mais rápidos e que tenham pilotos """
@@ -132,4 +133,9 @@ class GetStars(StarPyMae):
         """ Encontra naves mais rápidas e que tenham pilotos """
         return self._find_fastest_m(self.STAR_SHIPS)
 
+
 s = GetStars()
+
+""" StarPy CLI """
+# if __name__ == '__main__':
+#     fire.Fire(GetStars)
