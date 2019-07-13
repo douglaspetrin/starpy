@@ -4,11 +4,11 @@
 
 Read the full documentation at:
 
-- `_Documentation <https://dev.douglaspetrin.com/starpy>`_ 
+- [https://dev.douglaspetrin.com/starpy/](https://dev.douglaspetrin.com/starpy/) 
 
 For more articles visit the blog:
 
-- `_Blog <https://dev.douglaspetrin.com/b>`_
+- [https://dev.douglaspetrin.com/b/](https://dev.douglaspetrin.com/b/)
 
 ### Installation
 --
