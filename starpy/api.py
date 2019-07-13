@@ -134,27 +134,44 @@ class GetStars(StarPyMae):
     def _url_fastest_pilot_s(self):
         return self._url_of_fastest_pilot(self.STAR_SHIPS)
 
-    def _id_fastest_pilots_v(self):
-        pilot_id, il = self._url_fastest_pilot_v(), []
+    def _id_fastest_pilots(self, transport):
+        pilot_id, il = self._url_of_fastest_pilot(transport), []
         for i in range(len(pilot_id)):
             pid = pilot_id[i].split('/')[-2]
             il.append(pid)
         return il
 
-    def names_pilots_v(self):
-        l_ids, l_names = self._id_fastest_pilots_v(), []
+    def _id_fastest_pilots_v(self):
+        return self._id_fastest_pilots(self.VEHICLES)
+
+    def _id_fastest_pilots_s(self):
+        return self._id_fastest_pilots(self.STAR_SHIPS)
+
+    def _names_pilots(self, transport):
+        l_ids, l_names = self._id_fastest_pilots(transport), []
         for i in range(len(l_ids)):
             name = self.get_people_by_id(int(l_ids[i]))['name']
             l_names.append(name)
         return l_names
 
-    def name_and_max_speed(self):
-        n, sp, lis = self.names_pilots_v(), list(self.find_fastest_v().values()), []
+    def names_pilots_v(self):
+        return self._names_pilots(self.VEHICLES)
+
+    def names_pilots_s(self):
+        return self._names_pilots(self.STAR_SHIPS)
+
+    def _name_and_max_speed(self, transport):
+        n, sp, lis = self._names_pilots(transport), list(self._find_fastest_df(transport).values()), []
         for i in range(len(n)):
             li = [{n[i]: sp[i]}]
             lis.append(li)
         return lis
 
+    def name_and_max_speed_v(self):
+        return self._name_and_max_speed(self.VEHICLES)
+
+    def name_and_max_speed_s(self):
+        return self._name_and_max_speed(self.STAR_SHIPS)
 
 
 
