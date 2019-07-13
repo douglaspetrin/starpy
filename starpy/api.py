@@ -6,7 +6,6 @@ class StarPyMae(object):
     """ Classe Mãe
 
     Descrição: \n Faz a chamada da api e coleta dados para manipulação. \n
-    Ex: s = StarPyMae()
 
     """
 
@@ -119,7 +118,7 @@ class GetStars(StarPyMae):
     def _find_fastest_m(self, machine):
         """ Cria DataFrame para fácil manipulação """
 
-        l1, l2 = self._find_pilots_from(machine) # escolher com abordagem usar (Pandas ou não pandas)
+        l1, l2 = self._find_pilots_from(machine) # escolher qual abordagem usar (Pandas ou não pandas)
         df = pd.DataFrame(l2)
         df[2].replace(regex=True, inplace=True, to_replace='\D', value=r'0')
         df[2] = pd.to_numeric(df[2])
