@@ -2,6 +2,7 @@ import requests
 import pandas as pd
 import fire
 
+
 class StarPyMae(object):
 
     """ Classe Mãe
@@ -12,22 +13,20 @@ class StarPyMae(object):
 
     # Endpoints
 
-    VEHICLES = 'vehicles/'
-    PEOPLE = 'people/'
-    STAR_SHIPS = 'starships/'
+    VEHICLES = 'vehicles'
+    PEOPLE = 'people'
+    STAR_SHIPS = 'starships'
 
     # Low-levels of resource
-
-    MAX_ATMOSPHERING_SPEED = 'max_atmosphering_speed'
 
     def __init__(self):
         self.base_url = 'https://swapi.co/api'
 
     def _sget(self, endpoint, resource=None):
         if resource is None:
-            end, r = '%s/%s' , (self.base_url, endpoint)
+            end, r = '%s/%s', (self.base_url, endpoint)
         else:
-            end, r = '%s/%s%s/' , (self.base_url, endpoint, resource)
+            end, r = '%s/%s/%s/', (self.base_url, endpoint, resource)
         return requests.get(end % r).json()
 
     def get_next_page(self, endpoint, i):
@@ -68,52 +67,15 @@ class GetStars(StarPyMae):
         """
         return self.get_starships(rid)
 
-    def _find_pilots_from_li(self, transport):
-        """ Versão do tipo lista """
-        if transport == self.VEHICLES:
-            vm = self.get_vehicles()
-        else:
-            vm = self.get_starships()
-
-        v, page, l = vm, 1, []
-        while v['next'] is not None:
-            v = v['results']
-            for i in range(len(v)):
-                if v[i]['pilots']:
-                    li = [
-                        [
-                            {'i': i},
-                            {'pilots_url': v[i]['pilots']},
-                            {'name': v[i]['name']},
-                            {'max_speed': v[i]['max_atmosphering_speed']}
-                        ]
-                    ]
-                    l.append(li) # python only
-            page += 1
-            v = self.get_next_page(transport, page)
-
-        v = self.get_next_page(transport, page)['results']
-        for j in range(len(v)):
-            if v[j]['pilots'] and v[j]['max_atmosphering_speed']:
-                li = [
-                    [
-                        {'j': j},
-                        {'pilots_url': v[j]['pilots']},
-                        {'name': v[j]['name']},
-                        {'max_speed': v[j]['max_atmosphering_speed']}
-                    ]
-                ]
-                l.append(li)
-        return l
-
     def _find_pilots_from_df(self, transport):
         """ Versão do tipo Dataframe """
-        if transport == self.VEHICLES:
-            vm = self.get_vehicles()
-        else:
-            vm = self.get_starships()
 
-        v, page, li2 = vm, 1, []
+        if transport == self.VEHICLES:
+            v = self.get_vehicles()
+        elif transport == self.STAR_SHIPS:
+            v = self.get_starships()
+
+        page, li2 = 1, []
         while v['next'] is not None:
             v = v['results']
             for i in range(len(v)):
@@ -137,13 +99,9 @@ class GetStars(StarPyMae):
         return self._find_pilots_from_df(self.STAR_SHIPS)
 
     def _find_fastest_df(self, transport):
-        """ Cria DataFrame para fácil manipulação """
+        """ Cria DataFrame dos transportes mais rápidos """
         df = self._df_of_transport(transport)
         return df[2].nlargest(3).to_dict()
-
-    def _find_fastest_li(self, transport):
-        """ Obsoleto? """
-        pass
 
     def find_fastest_v(self):
         """ Encontra veículos mais rápidos e que tenham pilotos """
@@ -161,6 +119,54 @@ class GetStars(StarPyMae):
         df[2].replace(regex=True, inplace=True, to_replace='\D', value=r'0')
         df[2] = pd.to_numeric(df[2])
         return df
+
+    def _url_of_fastest_pilot(self, transport):
+        fastest = self._find_fastest_df(transport)
+        fastest, url_list = list(fastest.keys()), []
+        for i in range(len(fastest)):
+            df, n = self._df_of_transport(transport), fastest[i]
+            url_list.append(df[0][n][0])
+        return url_list
+
+    def _url_fastest_pilot_v(self):
+        return self._url_of_fastest_pilot(self.VEHICLES)
+
+    def _url_fastest_pilot_s(self):
+        return self._url_of_fastest_pilot(self.STAR_SHIPS)
+
+    def _id_fastest_pilots_v(self):
+        pilot_id, il = self._url_fastest_pilot_v(), []
+        for i in range(len(pilot_id)):
+            pid = pilot_id[i].split('/')[-2]
+            il.append(pid)
+        return il
+
+    def names_pilots_v(self):
+        l_ids, l_names = self._id_fastest_pilots_v(), []
+        for i in range(len(l_ids)):
+            name = self.get_people_by_id(int(l_ids[i]))['name']
+            l_names.append(name)
+        return l_names
+
+    def name_and_max_speed(self):
+        n, sp, lis = self.names_pilots_v(), list(self.find_fastest_v().values()), []
+        for i in range(len(n)):
+            li = [{n[i]: sp[i]}]
+            lis.append(li)
+        return lis
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 s = GetStars()
