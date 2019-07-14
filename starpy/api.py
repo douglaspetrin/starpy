@@ -5,8 +5,8 @@ import fire
 
 class StarPyMae(object):
 
-    """ Classe Mãe
-
+    """
+    Classe Mãe
     Descrição: \n Faz a chamada da api e coleta dados para manipulação. \n
 
     """
@@ -34,6 +34,7 @@ class StarPyMae(object):
 
 
 class GetStars(StarPyMae):
+    """ Herda varíaveis e métodos da classe StarPyMae """
 
     def get_people(self, res=None):
         """ Recebe people """
@@ -71,23 +72,36 @@ class GetStars(StarPyMae):
         return self.get_starships(rid)
 
     def _if_transport(self, transport):
-        """ Verifica qual tipo de transporte está sendo requisitado """
+        """ Método interno. \n
+            Verifica qual tipo de transporte está sendo requisitado \n
+            :param transport :type str
+            :return dict
+        """
         v = None
         if transport == self.VEHICLES:
             v = self.get_vehicles()
         elif transport == self.STAR_SHIPS:
             v = self.get_starships()
+        print('v: ', type(v))
+        print('v: ', v)
+        print('transport: ', type(transport))
+        print('transport: ', transport)
         return v
 
     def _find_pilots_from_df(self, transport):
-        """ Versão do tipo Dataframe """
+        """ Método interno. \n
+            Procura pilotos em tipo de transport requisitado
+            :param transport :type str
+            :return list
+        """
         v = self._if_transport(transport)
         page, li2 = 1, []
         while v['next'] is not None:
             v = v['results']
             for i in range(len(v)):
                 if v[i]['pilots']:
-                    lista = v[i]['pilots'], v[i]['name'], v[i]['max_atmosphering_speed'], 'i', i
+                    #lista = v[i]['pilots'], v[i]['name'], v[i]['max_atmosphering_speed'], 'i', i
+                    lista = v[i]['pilots'], v[i]['name'], v[i]['max_atmosphering_speed']
                     li2.append(lista)
             page += 1
             v = self.get_next_page(transport, page)
@@ -95,8 +109,11 @@ class GetStars(StarPyMae):
         v = self.get_next_page(transport, page)['results']
         for j in range(len(v)):
             if v[j]['pilots'] and v[j]['max_atmosphering_speed']:
-                lista = v[j]['pilots'], v[j]['name'], v[j]['max_atmosphering_speed'], 'j', j
+                #lista = v[j]['pilots'], v[j]['name'], v[j]['max_atmosphering_speed'], 'j', j
+                lista = v[j]['pilots'], v[j]['name'], v[j]['max_atmosphering_speed']
                 li2.append(lista)
+        print('li2: ', type(li2))
+        print('li2: ', li2)
         return li2
 
     def find_pilots_from_v(self):
@@ -106,19 +123,35 @@ class GetStars(StarPyMae):
         return self._find_pilots_from_df(self.STAR_SHIPS)
 
     def _find_fastest_transport_name_and_its_speed(self, transport):
+        """ Método interno. \n
+            Procura o nome e vel. máx dos tipos de transport \n
+            :param transport :type str
+            :return list, dict
+        """
         df = self._df_of_transport(transport)
         f, kl = df[2].nlargest(3), []
         for i in range(len(f)):
             n_index = f.index[i]
             n_transporte = df[1][n_index]
             kl.append(n_transporte)
+        print('kl: ', type(kl))
+        print('kl: ', kl)
+        print('f: ', type(f.to_dict()))
+        print('f: ', f.to_dict())
         return kl, f.to_dict()
 
     def _find_fastest_speed(self, transport):
-        """ Cria DataFrame dos transportes mais rápidos """
+        """ Encontra a velocidade máxima dos tranports mais rápidos
+
+        :param transport :type str
+        """
         return self._find_fastest_transport_name_and_its_speed(transport)[1]
 
     def _find_fastest_trans_name(self, transport):
+        """ Encontra o nome dos tranports mais rápidos
+
+        :param transport :type str
+        """
         return self._find_fastest_transport_name_and_its_speed(transport)[0]
 
     def find_fastest_v(self):
@@ -126,24 +159,39 @@ class GetStars(StarPyMae):
         return self._find_fastest_speed(self.VEHICLES)
 
     def find_fastest_s(self):
-        """ Encontra naves mais rápidas e que tenham pilotos """
+        """ Encontra starships mais rápidas e que tenham pilotos """
         return self._find_fastest_speed(self.STAR_SHIPS)
 
     def _df_of_transport(self, transport):
-        """ Cria DataFrame para fácil manipulação """
+        """ Cria DataFrame para fácil manipulação.
+            Remove strings da coluna de vel. máx e add valor zero.
+            Transforma coluna vel. máx para número
+            :param transport :type str
+            :return df :type dataframe
+         """
 
         l2 = self._find_pilots_from_df(transport)
         df = pd.DataFrame(l2)
         df[2].replace(regex=True, inplace=True, to_replace='\D', value=r'0')
         df[2] = pd.to_numeric(df[2])
+        print('df: ', type(df))
+        print('df: ', df)
         return df
 
     def _url_of_fastest_pilot(self, transport):
+        """ Método interno.
+            Ex. de retorno: url_list:  ['https://swapi.co/api/people/35/', 'https://swapi.co/api/people/10/']
+            :param transport :type str
+            :return df :type list
+        """
         fastest = self._find_fastest_speed(transport)
         fastest, url_list = list(fastest.keys()), []
+        df = self._df_of_transport(transport)
         for i in range(len(fastest)):
-            df, n = self._df_of_transport(transport), fastest[i]
+            n = fastest[i]
             url_list.append(df[0][n][0])
+            print('url_list: ', type(url_list))
+            print('url_list: ', url_list)
         return url_list
 
     def _url_fastest_pilot_v(self):
@@ -153,10 +201,13 @@ class GetStars(StarPyMae):
         return self._url_of_fastest_pilot(self.STAR_SHIPS)
 
     def _id_fastest_pilots(self, transport):
+        """ Método interno"""
         pilot_id, il = self._url_of_fastest_pilot(transport), []
         for i in range(len(pilot_id)):
             pid = pilot_id[i].split('/')[-2]
             il.append(pid)
+        print('il: ', type(il))
+        print('il: ', il)
         return il
 
     def _id_fastest_pilots_v(self):
@@ -170,6 +221,8 @@ class GetStars(StarPyMae):
         for i in range(len(l_ids)):
             name = self.get_people_by_id(int(l_ids[i]))['name']
             l_names.append(name)
+        print('l_names: ', type(l_names))
+        print('l_names: ', l_names)
         return l_names
 
     def names_pilots_v(self):
@@ -179,12 +232,19 @@ class GetStars(StarPyMae):
         return self._names_pilots(self.STAR_SHIPS)
 
     def _name_and_max_speed(self, transport):
+        """ Método interno.\n
+            Procura nome e vel. máx conforme tipo de transport
+            :param transport :type str
+            :return list
+        """
         n, sp, lis = self._names_pilots(transport), list(self._find_fastest_speed(transport).values()), []
         trans = self._find_fastest_trans_name(transport)
         transport_name = transport.capitalize()[:-1] + ' name'
         for i in range(len(n)):
             li = [{'Name': n[i], 'Max. Speed': sp[i], transport_name: trans[i]}]
             lis.append(li)
+        print('lis: ', type(lis))
+        print('lis: ', lis)
         return lis
 
     def name_and_max_speed_v(self):
@@ -194,12 +254,19 @@ class GetStars(StarPyMae):
         return self._name_and_max_speed(self.STAR_SHIPS)
 
     def _by_idpeople_return_transport_speed(self, transport, idname):
+        """ Método interno. \n
+            :param transport, idname
+            :type str, int
+            :return list
+         """
         lss, transport_urls_id = [], self.get_people_by_id(idname)[transport]
         for i in range(len(transport_urls_id)):
             url_id = transport_urls_id[i].split('/')[-2]
             speed = self._by_idtransports_return_its_speed(transport, url_id)
             ldata = [{'transport_id': url_id, 'Max. Speed': speed}]
             lss.append(ldata)
+        print('lss: ', type(lss))
+        print('lss: ', lss)
         return lss
 
     def _by_idtransports_return_its_speed(self, transport, idtrans):
