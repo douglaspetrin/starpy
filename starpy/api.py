@@ -25,14 +25,15 @@ class StarPyMae(object):
         """ Faz chamada do tipo get
         :param endpoint, resource, :type str, int
         """
-        s = requests.Session()
+        #s = requests.Session()
         if resource is None:
             end, r = '%s/%s', (self._base_url, endpoint)
-            re = s.get(end % r).json()
+         #   re = s.get(end % r).json()
         else:
             end, r = '%s/%s/%s/', (self._base_url, endpoint, resource)
-            re = s.get(end % r).json()
-        return re
+          #  re = s.get(end % r).json()
+        #return re
+        return requests.get(end % r).json()
 
     def get_next_page(self, endpoint, i):
         """ Recebe nova página para manipulação """
@@ -42,21 +43,22 @@ class StarPyMae(object):
 class GetStars(StarPyMae):
     """ Herda varíaveis e métodos da classe StarPyMae """
 
-    def get_people(self, res=None):
-        """ Recebe people """
+    def _get_people(self, res=None):
+        """ Recebe primeira página do endpoint people se não for passado argumento res. /n
+        """
         return self._sget(self._PEOPLE, res)
 
     def get_people_by_id(self, rid):
         """ Recebe people por id
         :param rid :type int
         """
-        return self.get_people(rid)
+        return self._get_people(rid)
 
     def _get_transport(self, transport, res=None):
         """ Faz chamada conforme tipo de transport e resource """
         return self._sget(transport, res)
 
-    def get_vehicles(self, res=None):
+    def _get_vehicles(self, res=None):
         """ Recebe vehicles """
         return self._get_transport(self._VEHICLES, res)
 
@@ -64,9 +66,9 @@ class GetStars(StarPyMae):
         """ Recebe vehicles por id
         :param rid :type int
         """
-        return self.get_vehicles(rid)
+        return self._get_vehicles(rid)
 
-    def get_starships(self, res=None):
+    def _get_starships(self, res=None):
         """ Recebe starships """
         return self._get_transport(self._STAR_SHIPS, res)
 
@@ -75,7 +77,7 @@ class GetStars(StarPyMae):
         :param rid :type: int
         :return:
         """
-        return self.get_starships(rid)
+        return self._get_starships(rid)
 
     def _if_transport(self, transport):
         """ Verifica qual tipo de transporte está sendo requisitado \n
@@ -84,9 +86,9 @@ class GetStars(StarPyMae):
         """
         v = None
         if transport == self._VEHICLES:
-            v = self.get_vehicles()
+            v = self._get_vehicles()
         elif transport == self._STAR_SHIPS:
-            v = self.get_starships()
+            v = self._get_starships()
         #print('v: ', v)
         return v
 
