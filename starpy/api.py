@@ -25,17 +25,19 @@ class StarPyMae(object):
         """ Faz chamada do tipo get
         :param endpoint, resource, :type str, int
         """
-        #s = requests.Session()
         if resource is None:
             end, r = '%s/%s', (self._base_url, endpoint)
-         #   re = s.get(end % r).json()
         else:
             end, r = '%s/%s/%s/', (self._base_url, endpoint, resource)
-          #  re = s.get(end % r).json()
-        #return re
-        return requests.get(end % r).json()
+        re = requests.Session().get(end % r)
+        if re.ok:
+            re = re.json()
+        else:
+            raise Exception
+        return re
+        #return requests.get(end % r).json()
 
-    def get_next_page(self, endpoint, i):
+    def _get_next_page(self, endpoint, i):
         """ Recebe nova página para manipulação """
         return self._sget(endpoint='%s?page=%s' % (endpoint, i), resource=None)
 
@@ -106,9 +108,9 @@ class GetStars(StarPyMae):
                     lista = v[i]['pilots'], v[i]['name'], v[i]['max_atmosphering_speed']
                     li2.append(lista)
             page += 1
-            v = self.get_next_page(transport, page)
+            v = self._get_next_page(transport, page)
 
-        v = self.get_next_page(transport, page)['results']
+        v = self._get_next_page(transport, page)['results']
         for j in range(len(v)):
             if v[j]['pilots'] and v[j]['max_atmosphering_speed']:
                 lista = v[j]['pilots'], v[j]['name'], v[j]['max_atmosphering_speed']
@@ -189,11 +191,17 @@ class GetStars(StarPyMae):
         #print('url_list: ', url_list)
         return url_list
 
-    def _url_fastest_pilot_v(self):
+    def _url_fastest_pilots_v(self):
         return self._url_of_fastest_pilot(self._VEHICLES)
 
-    def _url_fastest_pilot_s(self):
+    def _url_fastest_pilot_v(self):
+        return self._url_of_fastest_pilot(self._VEHICLES)[0]
+
+    def _url_fastest_pilots_s(self):
         return self._url_of_fastest_pilot(self._STAR_SHIPS)
+
+    def _url_fastest_pilot_s(self):
+        return self._url_of_fastest_pilot(self._STAR_SHIPS)[0]
 
     def _id_fastest_pilots(self, transport):
         """ Gera lista de ids dos pilotos mais rapidos conforme tipo de transport \n
@@ -207,11 +215,21 @@ class GetStars(StarPyMae):
         #print('il: ', il)
         return il
 
-    def _id_fastest_pilots_v(self):
+    def id_fastest_pilots_v(self):
+        """ Retorna o id dos pilots mais rápido dos vehicles"""
         return self._id_fastest_pilots(self._VEHICLES)
 
-    def _id_fastest_pilots_s(self):
+    def id_fastest_pilot_v(self):
+        """ Retorna o id do pilot mais rápido dos vehicles"""
+        return self._id_fastest_pilots(self._VEHICLES)[0]
+
+    def id_fastest_pilots_s(self):
+        """ Retorna o id dos pilots mais rápidos das starships"""
         return self._id_fastest_pilots(self._STAR_SHIPS)
+
+    def id_fastest_pilot_s(self):
+        """ Retorna o id do pilot mais rápido das starships"""
+        return self._id_fastest_pilots(self._STAR_SHIPS)[0]
 
     def _names_pilots(self, transport):
         """ Retorna nome dos pilotos mais rapidos \n
@@ -246,9 +264,11 @@ class GetStars(StarPyMae):
         return lis
 
     def name_and_max_speed_v(self):
+        """ Retorna nome e velocidade máx. do pilot com vehicle """
         return self._name_and_max_speed(self._VEHICLES)
 
     def name_and_max_speed_s(self):
+        """ Retorna nome e velocidade máx. do pilot com starship """
         return self._name_and_max_speed(self._STAR_SHIPS)
 
     def _by_idpeople_return_transport_speed(self, transport, idname):
