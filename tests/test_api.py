@@ -14,9 +14,22 @@ class TestApi(unittest.TestCase):
         self.assertIs(type(s.get_vehicles_by_id(10)), type({}))
 
     def test_api_is_str(self):
-        self.assertIs(type(s._get_transport(s._PEOPLE)), type(''))
-        self.assertIs(type(s._get_transport(s._STAR_SHIPS)), type(''))
-        self.assertIs(type(s._get_transport(s._VEHICLES)), type(''))
+        self.assertIs(type(s._PEOPLE), type(''))
+        self.assertIs(type(s._STAR_SHIPS), type(''))
+        self.assertIs(type(s._VEHICLES), type(''))
+
+    def test_api_is_dict(self):
+        self.assertIs(type(s._get_transport(s._VEHICLES)), type({}))
+
+    def test_sget(self):
+        self.assertIs(s._sget)
+
+    def test_if_transport(self):
+        self.assertIsNot(type(s._if_transport('au')), type({}))
+        self.assertIsNot(type(s._if_transport(132)), type({}))
+        self.assertIsNot(type(s._if_transport('veiculo')), type({}))
+        self.assertIsNot(type(s._if_transport(s._PEOPLE)), type({}))
+        self.assertIs(type(s._if_transport(s._VEHICLES)), type({}))
 
     def test_api_endpoint(self):
         pass
