@@ -15,6 +15,7 @@ class TestApi(unittest.TestCase, GetStars):
         self.assertIs(type(self.s.get_vehicles_by_id(10)), type({}))
 
     def test_api_endpoint(self):
+        pass
 
 
 
