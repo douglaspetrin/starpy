@@ -23,14 +23,17 @@ class StarPyMae(object):
         self.base_url = 'https://swapi.co/api'
 
     def _sget(self, endpoint, resource=None):
+        """ Faz chamada do tipo get
+        :param endpoint, resource, :type str, int
+        """
         if resource is None:
             end, r = '%s/%s', (self.base_url, endpoint)
         else:
             end, r = '%s/%s/%s/', (self.base_url, endpoint, resource)
-        s = requests.Session()
-        return s.get(end % r).json()
+        return requests.Session().get(end % r).json()
 
     def get_next_page(self, endpoint, i):
+        """ Recebe nova página para manipulação """
         return self._sget(endpoint='%s?page=%s' % (endpoint, i), resource=None)
 
 
@@ -48,6 +51,7 @@ class GetStars(StarPyMae):
         return self.get_people(rid)
 
     def _get_transport(self, transport, res=None):
+        """ Faz chamada conforme tipo de transport e resource """
         return self._sget(transport, res)
 
     def get_vehicles(self, res=None):
@@ -109,9 +113,11 @@ class GetStars(StarPyMae):
         return li2
 
     def find_pilots_from_v(self):
+        """ Encontra pilots de vehicles """
         return self._find_pilots_from_df(self.VEHICLES)
 
     def find_pilots_from_s(self):
+        """ Encontra pilots de starships """
         return self._find_pilots_from_df(self.STAR_SHIPS)
 
     def _find_fastest_transport_name_and_its_speed(self, transport):
