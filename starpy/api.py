@@ -44,7 +44,7 @@ class GetStars(StarPyMae):
     """ Herda varíaveis e métodos da classe StarPyMae """
 
     def _get_people(self, res=None):
-        """ Recebe primeira página do endpoint people se não for passado argumento res. /n
+        """ Recebe primeira página do endpoint people se não for passado argumento res.
         """
         return self._sget(self._PEOPLE, res)
 
