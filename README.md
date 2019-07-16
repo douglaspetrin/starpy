@@ -73,7 +73,7 @@ s.fastest_person_with_v()
 ```
 To access resources it is better instantiate the main object GetStars as:
 ```python     
-s = GetStars()
+s = starpy.GetStars()
 ```
 After instatiate the GetStars object accessing methods is simple as:
 ```python
