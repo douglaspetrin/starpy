@@ -49,7 +49,7 @@ class GetStars(StarPyMae):
         """
         return self._sget(self._PEOPLE, res)
 
-    def get_people_by_id(self, rid):
+    def get_person_by_id(self, rid):
         """ Recebe people por id \n
         :param rid :type int
         """
@@ -231,14 +231,16 @@ class GetStars(StarPyMae):
         """
         l_ids, l_names = self._id_fastest_pilots(transport), []
         for i in range(len(l_ids)):
-            name = self.get_people_by_id(int(l_ids[i]))['name']
+            name = self.get_person_by_id(int(l_ids[i]))['name']
             l_names.append(name)
         return l_names
 
     def names_pilots_v(self):
+        """ Return the fastest pilots driving vehicles """
         return self._names_pilots(self._VEHICLES)
 
     def names_pilots_s(self):
+        """ Return the fastest pilots driving starships """
         return self._names_pilots(self._STAR_SHIPS)
 
     def _name_and_max_speed(self, transport):
@@ -268,7 +270,7 @@ class GetStars(StarPyMae):
         :type str, int \n
         :return list
          """
-        lss, transport_urls_id = [], self.get_people_by_id(idname)[transport]
+        lss, transport_urls_id = [], self.get_person_by_id(idname)[transport]
         for i in range(len(transport_urls_id)):
             url_id = transport_urls_id[i].split('/')[-2]
             speed = self._by_idtransports_return_its_speed(transport, url_id)
@@ -279,11 +281,11 @@ class GetStars(StarPyMae):
     def _by_idtransports_return_its_speed(self, transport, idtrans):
         return self._get_transport(transport, idtrans)['max_atmosphering_speed']
 
-    def starships_speed_by_people(self, idpeople):
+    def starships_speed_by_person(self, idpeople):
         """ Retorna vel. de startship pelo id do pilot"""
         return self._by_idpeople_return_transport_speed(self._STAR_SHIPS, idpeople)
 
-    def vehicles_speed_by_people(self, idpeople):
+    def vehicles_speed_by_person(self, idpeople):
         """ Retorna vel. de vehicle pelo id do pilot"""
         return self._by_idpeople_return_transport_speed(self._VEHICLES, idpeople)
 
