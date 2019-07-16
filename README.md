@@ -61,9 +61,9 @@ To run tests from terminal:
 ```
 ## Basic Usage   
 ```python
-from starpy.api import GetStars
+import starpy
 
-s = GetStars()
+s = starpy.GetStars()
 
 s.starships_speed_by_person(11)    
 # Returns [[{'transport_id': '59', 'Max. Speed': '1050'}], [{'transport_id': '65', 'Max. Speed': '1500'}], [{'transport_id': '39', 'Max. Speed': '1100'}]]
