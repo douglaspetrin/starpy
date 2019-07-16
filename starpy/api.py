@@ -314,4 +314,7 @@ class GetStars(StarPyMae):
 
 
 if __name__ == '__main__':
-    print('Lets begin the search in the galaxy...')
+    print('\n===== Lets begin the search! ===== '
+          '\nI already instantiate the main object to you in the variable: s.'
+          '\n\nSo, you can run for example: s.fastest_person_with_s()')
+    s = GetStars()
