@@ -57,7 +57,7 @@ class GetStars(StarPyMae):
         return self._get_people(rid)
 
     def _get_transport(self, transport, res=None):
-        """ Faz chamada conforme tipo de transport e resource """
+        """ Send a get request passing type of transport and resource as arguments"""
         return self._sget(transport, res)
 
     def _get_vehicles(self, res=None):
