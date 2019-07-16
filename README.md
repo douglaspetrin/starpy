@@ -12,14 +12,14 @@ For more articles visit the blog:
 
 ### Installation
 --
-##### For Windows you can run:
+##### From Windows you can run:
 
 #### `python3 -m venv venv`
 #### `venv/Scripts/activate`
 #### `pip3 install -r requirements.txt`
 
 --
-##### For Linux you can run:
+##### From Linux you can run:
 
 #### `make init`
 #### `source venv/bin/activate`
