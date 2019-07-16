@@ -21,11 +21,11 @@ It is better to create a virtual env and then install the project by running:
 # StarPy Command Line Interface (CLI)  
 
 From the command line, you can run:
-    
+```bash 
     python start.py command arg 
-             
+```      
 Examples: 
-     
+```bash  
              python start.py fastest-person-with-s
              --> Returns the fastest person driving a starship
              
@@ -51,14 +51,14 @@ Examples:
              start.py pilot-names-v
              start.py starships-speed-by-person <id>
              start.py vehicles-speed-by-person <id>
-
+```
              
 ## Tests made with unittest
 
 To run tests from terminal: 
-
+```bash
     python3 -m unittest tests\test_api.py
-
+```
 ## Basic Usage   
 ```python
 from starpy.api import GetStars
