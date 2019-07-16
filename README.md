@@ -25,7 +25,8 @@ For more articles visit the blog:
 #### `source venv/bin/activate`
 #### `make install`  
 
-#### StarPy CLI  
+
+# StarPy Command Line Interface (CLI)  
 
 ##### `From the command line, you can run:  python start.py command arg `
              
