@@ -29,13 +29,12 @@ class StarPyMae(object):
             end, r = '%s/%s', (self._base_url, endpoint)
         else:
             end, r = '%s/%s/%s/', (self._base_url, endpoint, resource)
-        re = requests.Session().get(end % r)
+        re = requests.get(end % r)
         if re.ok:
             re = re.json()
         else:
             raise Exception
         return re
-        #return requests.get(end % r).json()
 
     def _get_next_page(self, endpoint, i):
         """ Recebe nova página para manipulação """
