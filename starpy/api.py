@@ -5,8 +5,8 @@ import pandas as pd
 class StarPyMae(object):
 
     """
-    Classe Mãe
-    Descrição: \n Faz a chamada da api e coleta dados para manipulação. \n
+    Main Class \n
+    Description: Makes the api call for data manipulation. \ n
 
     """
 
@@ -16,13 +16,13 @@ class StarPyMae(object):
     _PEOPLE = 'people'
     _STAR_SHIPS = 'starships'
 
-    # Low-levels of resource
+    # Main methods
 
     def __init__(self):
         self._base_url = 'https://swapi.co/api'
 
     def _sget(self, endpoint, resource=None):
-        """ Faz chamada do tipo get
+        """ Get request to _base_url
         :param endpoint, resource, :type str, int
         """
         if resource is None:
@@ -37,20 +37,21 @@ class StarPyMae(object):
         return re
 
     def _get_next_page(self, endpoint, i):
-        """ Recebe nova página para manipulação """
+        """ Gets new/next page for manipulation """
         return self._sget(endpoint='%s?page=%s' % (endpoint, i), resource=None)
 
 
 class GetStars(StarPyMae):
-    """ Herda variáveis e métodos da classe StarPyMae """
+    """ Inherit methods and variables from StarPyMae Class"""
 
     def _get_people(self, res=None):
-        """ Recebe primeira página do endpoint people se não for passado argumento res.
+        """ Gets the first page of people's endpoint if the parameter res is passed as None \n
+            otherwise it returns data a specific person's id.
         """
         return self._sget(self._PEOPLE, res)
 
     def get_person_by_id(self, rid):
-        """ Recebe people por id \n
+        """ Gets data from person's id passed as argument \n
         :param rid :type int
         """
         return self._get_people(rid)
@@ -60,29 +61,31 @@ class GetStars(StarPyMae):
         return self._sget(transport, res)
 
     def _get_vehicles(self, res=None):
-        """ Recebe vehicles """
+        """ Gets vehicles data from first page if parameter res receives None \n
+            otherwise it gets vehicles data of specific vehicle """
         return self._get_transport(self._VEHICLES, res)
 
     def get_vehicles_by_id(self, rid):
-        """ Recebe vehicles por id \n
+        """ Gets vehicles data from its id passed as argument to rid parameter \n
         :param rid :type int
         """
         return self._get_vehicles(rid)
 
     def _get_starships(self, res=None):
-        """ Recebe starships """
+        """ Gets star ships data from first page if parameter res receives None \n
+            otherwise it gets star ships data of specific star ship """
         return self._get_transport(self._STAR_SHIPS, res)
 
     def get_starships_by_id(self, rid):
-        """ Recebe starships por id \n
+        """ Gets star ship from id passed as argument to the rid parameter \n
         :param rid :type: int
         :return:
         """
         return self._get_starships(rid)
 
     def _if_transport(self, transport):
-        """ Verifica qual tipo de transporte está sendo requisitado \n
-        :param transport :type str
+        """ It checks which kind of transport is passed as argument to the next methods\n
+        :param transport :type str \n
         :return dict
         """
         v = None
@@ -95,8 +98,8 @@ class GetStars(StarPyMae):
         return v
 
     def _find_pilots_from_df(self, transport):
-        """ Procura pilotos em tipo de transport requisitado \n
-        :param transport :type str
+        """ Find pilots from pandas DataFrame depending on transport's type passed as argument \n
+        :param transport :type str \n
         :return list
         """
         v = self._if_transport(transport)
@@ -118,16 +121,16 @@ class GetStars(StarPyMae):
         return li2
 
     def find_pilots_from_v(self):
-        """ Encontra pilots de vehicles """
+        """ Finds vehicle pilots """
         return self._find_pilots_from_df(self._VEHICLES)
 
     def find_pilots_from_s(self):
-        """ Encontra pilots de starships """
+        """ Finds star ship pilots """
         return self._find_pilots_from_df(self._STAR_SHIPS)
 
     def _find_fastest_transport_name_and_its_speed(self, transport):
-        """ Procura o nome e vel. máx dos tipos de transport \n
-        :param transport :type str
+        """ Finds the fastest transport name and its speed \n
+        :param transport :type str \n
         :return list, dict
         """
         df = self._df_of_transport(transport)
@@ -139,31 +142,31 @@ class GetStars(StarPyMae):
         return kl, f.to_dict()
 
     def _find_fastest_speed(self, transport):
-        """ Encontra a velocidade máxima dos tranports mais rápidos \n
+        """ Finds fastest transport and returns its speed depending on the parameter passed. \n
+            Ex: self._VEHICLES or self.STAR_SHIPS \n
         :param transport :type str
         """
         return self._find_fastest_transport_name_and_its_speed(transport)[1]
 
     def _find_fastest_trans_name(self, transport):
-        """ Encontra o nome dos tranports mais rápidos \n
+        """ Finds fastest transport and returns its name depending on the parameter passed. \n
+            Ex: self._VEHICLES or self.STAR_SHIPS \n
         :param transport :type str
         """
         return self._find_fastest_transport_name_and_its_speed(transport)[0]
 
     def find_fastest_v(self):
-        """ Encontra veículos mais rápidos e que tenham pilotos """
+        """ Finds the fastest vehicles with at least one pilot associated to it """
         return self._find_fastest_speed(self._VEHICLES)
 
     def find_fastest_s(self):
-        """ Encontra starships mais rápidas e que tenham pilotos """
+        """ Finds the fastest star ships with at least one pilot associated to it """
         return self._find_fastest_speed(self._STAR_SHIPS)
 
     def _df_of_transport(self, transport):
-        """ Cria DataFrame para fácil manipulação. \n
-            Remove strings da coluna de vel. máx e add valor zero. \n
-            Transforma coluna vel. máx para número \n
+        """ Creates pandas DataFrame to easier data manipulation. \n
         :param transport :type str \n
-        :return df :type dataframe
+        :return df :type pandas DataFrame
          """
         l2 = self._find_pilots_from_df(transport)
         df = pd.DataFrame(l2)
@@ -172,8 +175,8 @@ class GetStars(StarPyMae):
         return df
 
     def _url_of_fastest_pilot(self, transport):
-        """ Gera lista das urls dos pilotos mais rápidos \n
-            Ex. de retorno: url_list:  ['https://swapi.co/api/people/35/', 'https://swapi.co/api/people/10/'] \n
+        """ Returns url's list of fastest pilots depending on parameter. \n
+            Ex:  ['https://swapi.co/api/people/35/', 'https://swapi.co/api/people/10/'] \n
         :param transport :type str \n
         :return df :type list
         """
@@ -186,20 +189,24 @@ class GetStars(StarPyMae):
         return url_list
 
     def _url_fastest_pilots_v(self):
+        """ Returns url's list of fastest pilots driving Vehicles. """
         return self._url_of_fastest_pilot(self._VEHICLES)
 
     def _url_fastest_pilot_v(self):
+        """ Returns urls of fastest pilot driving Vehicles. """
         return self._url_of_fastest_pilot(self._VEHICLES)[0]
 
     def _url_fastest_pilots_s(self):
+        """ Returns url's list of fastest pilots driving StarShips. """
         return self._url_of_fastest_pilot(self._STAR_SHIPS)
 
     def _url_fastest_pilot_s(self):
+        """ Returns urls of fastest pilot driving StarShips. """
         return self._url_of_fastest_pilot(self._STAR_SHIPS)[0]
 
     def _id_fastest_pilots(self, transport):
-        """ Gera lista de ids dos pilotos mais rapidos conforme tipo de transport \n
-        :param transport :type str
+        """ Returns id's list of fastest pilots according to the parameter passed \n
+        :param transport :type str \n
         :return list
         """
         pilot_id, il = self._url_of_fastest_pilot(transport), []
@@ -209,23 +216,23 @@ class GetStars(StarPyMae):
         return il
 
     def id_fastest_pilots_v(self):
-        """ Retorna o id dos pilots mais rápido dos vehicles"""
+        """ Returns id's list of fastest pilots driving Vehicles. """
         return self._id_fastest_pilots(self._VEHICLES)
 
     def id_fastest_pilot_v(self):
-        """ Retorna o id do pilot mais rápido dos vehicles"""
+        """ Returns id of fastest pilot driving Vehicles. """
         return self._id_fastest_pilots(self._VEHICLES)[0]
 
     def id_fastest_pilots_s(self):
-        """ Retorna o id dos pilots mais rápidos das starships"""
+        """ Returns id's list of fastest pilots driving StarShips. """
         return self._id_fastest_pilots(self._STAR_SHIPS)
 
     def id_fastest_pilot_s(self):
-        """ Retorna o id do pilot mais rápido das starships"""
+        """ Returns id of fastest pilot driving StarShips. """
         return self._id_fastest_pilots(self._STAR_SHIPS)[0]
 
     def _pilot_names(self, transport):
-        """ Retorna nome dos pilotos mais rapidos \n
+        """ Gets the fastest pilot names depending on the parameter \n
         :param transport :type str \n
         :return list
         """
@@ -236,15 +243,15 @@ class GetStars(StarPyMae):
         return l_names
 
     def pilot_names_v(self):
-        """ Return the fastest pilot names driving vehicles """
+        """ Returns the fastest pilot names driving Vehicles """
         return self._pilot_names(self._VEHICLES)
 
     def pilot_names_s(self):
-        """ Return the fastest pilot names driving starships """
+        """ Returns the fastest pilot names driving StarShips """
         return self._pilot_names(self._STAR_SHIPS)
 
     def _name_and_max_speed(self, transport):
-        """ Procura nome e vel. máx conforme tipo de transport \n
+        """ Returns pilots name and max. speed according to the parameter passed \n
         :param transport :type str \n
         :return list
         """
@@ -257,15 +264,15 @@ class GetStars(StarPyMae):
         return lis
 
     def name_and_max_speed_v(self):
-        """ Retorna nome e velocidade máx. do pilot com vehicle """
+        """ Returns pilots name and its Vehicles max. speed"""
         return self._name_and_max_speed(self._VEHICLES)
 
     def name_and_max_speed_s(self):
-        """ Retorna nome e velocidade máx. do pilot com starship """
+        """ Returns pilots name and its StarShips max. speed"""
         return self._name_and_max_speed(self._STAR_SHIPS)
 
     def _by_idpeople_return_transport_speed(self, transport, idname):
-        """ Retorna vel. máx por tipo de transport \n
+        """ Returns transport speed by passing type of transport and id of person \n
         :param transport, idname \n
         :type str, int \n
         :return list
@@ -279,25 +286,30 @@ class GetStars(StarPyMae):
         return lss
 
     def _by_idtransports_return_its_speed(self, transport, idtrans):
+        """ Returns transport speed by passing type of transport and its id as an argument """
         return self._get_transport(transport, idtrans)['max_atmosphering_speed']
 
     def starships_speed_by_person(self, idpeople):
-        """ Retorna vel. de startship pelo id do pilot"""
+        """ Returns StarShips speed by passing person's id as an argument """
         return self._by_idpeople_return_transport_speed(self._STAR_SHIPS, idpeople)
 
     def vehicles_speed_by_person(self, idpeople):
-        """ Retorna vel. de vehicle pelo id do pilot"""
+        """ Returns Vehicles speed by passing person's id as an argument """
         return self._by_idpeople_return_transport_speed(self._VEHICLES, idpeople)
 
     def _fastest_person(self, transport):
+        """ Returns fastest person's name, its transport's name, and its max. \n
+            speed reached according to the type of transport passed as an argument"""
         return self._name_and_max_speed(transport)[0]
 
     def fastest_person_with_v(self):
-        """ Retorna o nome da pessoa, do vehicle e velocidade máxima """
+        """ Returns fastest person's name, its transport's name and its max. \n
+            speed reached driving Vehicles """
         return self._fastest_person(self._VEHICLES)
 
     def fastest_person_with_s(self):
-        """ Retorna o nome da pessoa, da starship e velocidade máxima """
+        """ Returns fastest person's name, its transport's name and its max. \n
+            speed reached driving StarShips """
         return self._fastest_person(self._STAR_SHIPS)
 
 
