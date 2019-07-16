@@ -311,3 +311,7 @@ class GetStars(StarPyMae):
         """ Returns fastest person's name, its transport's name and its max. \n
             speed reached driving StarShips """
         return self._fastest_person(self._STAR_SHIPS)
+
+
+if __name__ == '__main__':
+    s = GetStars()
