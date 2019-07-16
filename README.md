@@ -1,4 +1,4 @@
-# StarPy - A Python Library for the SWAPI
+# StarPy - A Python Library for the SWAPI (Star Wars API)
 
 ### Documentation
 
@@ -67,3 +67,6 @@ To run tests from terminal:
 
 ## Want to contribute to this project?
 You are more than welcome! 
+
+## Reference API
+###### Star Wars API - https://swapi.co/
