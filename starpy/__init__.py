@@ -1,5 +1,5 @@
 # coding=utf-8
-import starpy.api
+from starpy.api import GetStars
 
 __author__ = 'Douglas Petrin'
 __version__ = '0.1.0'
