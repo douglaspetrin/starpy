@@ -314,4 +314,4 @@ class GetStars(StarPyMae):
 
 
 if __name__ == '__main__':
-    s = GetStars()
+    print('Lets begin the search in the galaxy...')
