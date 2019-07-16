@@ -1,5 +1,5 @@
 init:
-        python3 -m venv venv
+        python3 -m venv venvaaa
 
 install:
-        pip3 install -r requirements.txt
+        pip3 install -r requirementssss.txt
