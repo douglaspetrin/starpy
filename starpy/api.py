@@ -42,7 +42,7 @@ class StarPyMae(object):
 
 
 class GetStars(StarPyMae):
-    """ Inherit methods and variables from StarPyMae Class"""
+    """ Inherits methods and variables from StarPyMae Class"""
 
     def _get_people(self, res=None):
         """ Gets the first page of people's endpoint if the parameter res is passed as None \n
