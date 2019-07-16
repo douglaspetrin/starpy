@@ -30,10 +30,10 @@ class StarPyMae(object):
         else:
             end, r = '%s/%s/%s/', (self._base_url, endpoint, resource)
         re = requests.get(end % r)
-        if re.ok:
+        if re.ok and re.status_code == 200:
             re = re.json()
         else:
-            raise Exception
+            raise Exception('Not found or invalid. Try again with a different one!')
         return re
 
     def _get_next_page(self, endpoint, i):
@@ -91,7 +91,7 @@ class GetStars(StarPyMae):
         if transport == self._STAR_SHIPS:
             v = self._get_starships()
         if v is None:
-            raise Exception
+            raise Exception('Choose between self._VEHICLES or self._STAR_SHIPS')
         return v
 
     def _find_pilots_from_df(self, transport):
@@ -115,7 +115,6 @@ class GetStars(StarPyMae):
             if v[j]['pilots'] and v[j]['max_atmosphering_speed']:
                 lista = v[j]['pilots'], v[j]['name'], v[j]['max_atmosphering_speed']
                 li2.append(lista)
-        #print('li2: ', li2)
         return li2
 
     def find_pilots_from_v(self):
@@ -137,8 +136,6 @@ class GetStars(StarPyMae):
             n_index = f.index[i]
             n_transporte = df[1][n_index]
             kl.append(n_transporte)
-        #print('kl: ', kl)
-        #print('f: ', f.to_dict())
         return kl, f.to_dict()
 
     def _find_fastest_speed(self, transport):
@@ -168,12 +165,10 @@ class GetStars(StarPyMae):
         :param transport :type str
         :return df :type dataframe
          """
-
         l2 = self._find_pilots_from_df(transport)
         df = pd.DataFrame(l2)
         df[2].replace(regex=True, inplace=True, to_replace='\D', value=r'0')
         df[2] = pd.to_numeric(df[2])
-        #print('df: ', df)
         return df
 
     def _url_of_fastest_pilot(self, transport):
@@ -188,7 +183,6 @@ class GetStars(StarPyMae):
         for i in range(len(fastest)):
             n = fastest[i]
             url_list.append(df[0][n][0])
-        #print('url_list: ', url_list)
         return url_list
 
     def _url_fastest_pilots_v(self):
@@ -212,7 +206,6 @@ class GetStars(StarPyMae):
         for i in range(len(pilot_id)):
             pid = pilot_id[i].split('/')[-2]
             il.append(pid)
-        #print('il: ', il)
         return il
 
     def id_fastest_pilots_v(self):
@@ -240,7 +233,6 @@ class GetStars(StarPyMae):
         for i in range(len(l_ids)):
             name = self.get_people_by_id(int(l_ids[i]))['name']
             l_names.append(name)
-        #print('l_names: ', l_names)
         return l_names
 
     def names_pilots_v(self):
@@ -260,7 +252,6 @@ class GetStars(StarPyMae):
         for i in range(len(n)):
             li = [{'Name': n[i], 'Max. Speed': sp[i], transport_name: trans[i]}]
             lis.append(li)
-        #print('lis: ', lis)
         return lis
 
     def name_and_max_speed_v(self):
@@ -281,15 +272,14 @@ class GetStars(StarPyMae):
         for i in range(len(transport_urls_id)):
             url_id = transport_urls_id[i].split('/')[-2]
             speed = self._by_idtransports_return_its_speed(transport, url_id)
-            ldata = [{'transport_id': url_id, 'Max. Speed': speed}]
-            lss.append(ldata)
-        #print('lss: ', lss)
+            l_data = [{'transport_id': url_id, 'Max. Speed': speed}]
+            lss.append(l_data)
         return lss
 
     def _by_idtransports_return_its_speed(self, transport, idtrans):
         return self._get_transport(transport, idtrans)['max_atmosphering_speed']
 
-    def starships_speed_by_people(self, idpeople): # TODO: coletar o nome também?
+    def starships_speed_by_people(self, idpeople):
         """ Retorna vel. de startship pelo id do pilot"""
         return self._by_idpeople_return_transport_speed(self._STAR_SHIPS, idpeople)
 
