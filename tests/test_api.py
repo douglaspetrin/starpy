@@ -8,24 +8,19 @@ class TestApi(unittest.TestCase):
         self.s = GetStars()
 
     def test_get_people_by_id(self):
-        self.assertRaises(TypeError, self.s.get_people_by_id, 'hehe] ')
+        self.assertRaises(Exception, self.s.get_people_by_id, 'hehe] ')
         self.assertIs(type(self.s.get_people_by_id(10)), dict)
-        alphabet = []
-        for letter in range(65, 91):
-            alphabet.append(chr(letter))
-
-        for i in range(len(alphabet)):
-            self.assertEqual((self.s.get_people_by_id(alphabet[i])['detail']), 'Not found')
 
     def test_get_starships_by_id(self):
         self.assertIs(type(self.s.get_starships_by_id(10)), dict)
 
     def test_get_vehicles_by_id(self):
-        self.assertIs(type(self.s.get_vehicles_by_id(10)), dict)
+        self.assertRaises(Exception, self.s.get_vehicles_by_id, 10)
+        self.assertIs(type(self.s.get_vehicles_by_id(35)), dict)
 
     def test_get_transport(self):
         self.assertIs(type(self.s._get_transport(self.s._VEHICLES)), dict)
-        self.assertIs(type(self.s._get_transport('')), Exception)
+        self.assertRaises(Exception, self.s._get_transport(''))
 
     def test_sget(self):
         self.assertIs(type(self.s._sget(self.s._VEHICLES)), dict)
