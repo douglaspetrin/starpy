@@ -59,7 +59,7 @@ Examples:
              start.py vehicles-speed-by-person <id>
 
              
-## Tests
+## Tests made with unittest
 
 To run tests from terminal: 
 
