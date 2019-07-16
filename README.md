@@ -68,5 +68,8 @@ To run tests from terminal:
 ## Want to contribute to this project?
 You are more than welcome! 
 
+## MIT License
+Copyright (c) 2019 Douglas Petrin
+
 ## Reference API
 ###### Star Wars API - https://swapi.co/
