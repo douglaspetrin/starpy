@@ -65,6 +65,19 @@ To run tests from terminal:
 
 `python3 -m unittest tests\test_api.py`
 
+## More examples   
+
+    from starpy.api import GetStars
+
+    s = GetStars()
+    
+    sbp = s.starships_speed_by_person(11)    
+    # Returns [[{'transport_id': '59', 'Max. Speed': '1050'}], [{'transport_id': '65', 'Max. Speed': '1500'}], [{'transport_id': '39', 'Max. Speed': '1100'}]]
+    
+    
+    
+
+
 ## Want to contribute to this project?
 You are more than welcome! 
 

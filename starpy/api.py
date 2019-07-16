@@ -224,7 +224,7 @@ class GetStars(StarPyMae):
         """ Retorna o id do pilot mais rápido das starships"""
         return self._id_fastest_pilots(self._STAR_SHIPS)[0]
 
-    def _names_pilots(self, transport):
+    def _pilot_names(self, transport):
         """ Retorna nome dos pilotos mais rapidos \n
         :param transport :type str \n
         :return list
@@ -235,20 +235,20 @@ class GetStars(StarPyMae):
             l_names.append(name)
         return l_names
 
-    def names_pilots_v(self):
-        """ Return the fastest pilots driving vehicles """
-        return self._names_pilots(self._VEHICLES)
+    def pilot_names_v(self):
+        """ Return the fastest pilot names driving vehicles """
+        return self._pilot_names(self._VEHICLES)
 
-    def names_pilots_s(self):
-        """ Return the fastest pilots driving starships """
-        return self._names_pilots(self._STAR_SHIPS)
+    def pilot_names_s(self):
+        """ Return the fastest pilot names driving starships """
+        return self._pilot_names(self._STAR_SHIPS)
 
     def _name_and_max_speed(self, transport):
         """ Procura nome e vel. máx conforme tipo de transport \n
         :param transport :type str \n
         :return list
         """
-        n, sp, lis = self._names_pilots(transport), list(self._find_fastest_speed(transport).values()), []
+        n, sp, lis = self._pilot_names(transport), list(self._find_fastest_speed(transport).values()), []
         trans = self._find_fastest_trans_name(transport)
         transport_name = transport.capitalize()[:-1] + ' name'
         for i in range(len(n)):

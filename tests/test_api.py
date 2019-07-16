@@ -16,8 +16,8 @@ class TestApi(unittest.TestCase):
         self.assertRaises(Exception, self.s._sget, self.ha)
 
     def test_get_people_by_id(self):
-        self.assertRaises(Exception, self.s.get_people_by_id, self.ha)
-        self.assertIs(type(self.s.get_people_by_id(10)), dict)
+        self.assertRaises(Exception, self.s.get_person_by_id, self.ha)
+        self.assertIs(type(self.s.get_person_by_id(10)), dict)
 
     def test__get_starships_by_id(self):
         self.assertRaises(Exception, self.s._get_starships, self.ha)
@@ -106,17 +106,17 @@ class TestApi(unittest.TestCase):
         self.assertRaises(Exception, self.s.id_fastest_pilot_s, self.ha)
         self.assertIs(type(self.s.id_fastest_pilot_s()), str)
 
-    def test__names_pilots(self):
-        self.assertRaises(Exception, self.s._names_pilots, self.ha)
-        self.assertIs(type(self.s._names_pilots(self.s._STAR_SHIPS)), list)
+    def test__pilot_names(self):
+        self.assertRaises(Exception, self.s._pilot_names, self.ha)
+        self.assertIs(type(self.s._pilot_names(self.s._STAR_SHIPS)), list)
 
-    def test_names_pilots_v(self):
-        self.assertRaises(Exception, self.s.names_pilots_v, self.ha)
-        self.assertIs(type(self.s.names_pilots_v()), list)
+    def test_pilot_names_v(self):
+        self.assertRaises(Exception, self.s.pilot_names_v, self.ha)
+        self.assertIs(type(self.s.pilot_names_v()), list)
 
-    def test_names_pilots_s(self):
-        self.assertRaises(Exception, self.s.names_pilots_s, self.ha)
-        self.assertIs(type(self.s.names_pilots_s()), list)
+    def test_pilot_names_s(self):
+        self.assertRaises(Exception, self.s.pilot_names_s, self.ha)
+        self.assertIs(type(self.s.pilot_names_s()), list)
 
     def test__name_and_max_speed(self):
         self.assertRaises(Exception, self.s._name_and_max_speed, self.ha)
