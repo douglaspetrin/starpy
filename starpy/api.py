@@ -88,9 +88,10 @@ class GetStars(StarPyMae):
         v = None
         if transport == self._VEHICLES:
             v = self._get_vehicles()
-        elif transport == self._STAR_SHIPS:
+        if transport == self._STAR_SHIPS:
             v = self._get_starships()
-        #print('v: ', v)
+        if v is None:
+            raise Exception
         return v
 
     def _find_pilots_from_df(self, transport):
