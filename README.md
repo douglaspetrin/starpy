@@ -13,7 +13,7 @@ For more articles visit the blog:
 
 ## Installation
 
-It is better create a virtual env and then install the project by running:
+It is better to create a virtual env and then install the project by running:
 
     pip3 install -r requirements.txt
 
