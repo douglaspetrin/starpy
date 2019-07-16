@@ -11,16 +11,17 @@ For more articles visit the blog:
 
 - [https://dev.douglaspetrin.com/b/](https://dev.douglaspetrin.com/b/)
 
-### Installation
---
-##### From Windows you can run:
+## Installation
+
+From Windows you can run:
 
 #### `python3 -m venv venv`
 #### `venv/Scripts/activate`
 #### `pip3 install -r requirements.txt`
 
---
-##### From Linux you can run:
+##
+
+From Linux you can run:
 
 #### `make init`
 #### `source venv/bin/activate`
@@ -29,7 +30,9 @@ For more articles visit the blog:
 
 # StarPy Command Line Interface (CLI)  
 
-##### `From the command line, you can run:  python start.py command arg `
+From the command line, you can run:
+    
+    python start.py command arg 
              
 Examples: 
      
@@ -64,7 +67,7 @@ Examples:
 
 To run tests from terminal: 
 
-`python3 -m unittest tests\test_api.py`
+    python3 -m unittest tests\test_api.py
 
 ## Basic Usage   
 
