@@ -53,8 +53,8 @@ Examples:
              start.py id-fastest-pilots-v
              start.py name-and-max-speed-s
              start.py name-and-max-speed-v
-             start.py names-pilots-s
-             start.py names-pilots-v
+             start.py pilot-names-s
+             start.py pilot-names-v
              start.py starships-speed-by-person <id>
              start.py vehicles-speed-by-person <id>
 
@@ -65,18 +65,30 @@ To run tests from terminal:
 
 `python3 -m unittest tests\test_api.py`
 
-## More examples   
+## Basic Usage   
 
     from starpy.api import GetStars
 
     s = GetStars()
     
-    sbp = s.starships_speed_by_person(11)    
+    s.starships_speed_by_person(11)    
     # Returns [[{'transport_id': '59', 'Max. Speed': '1050'}], [{'transport_id': '65', 'Max. Speed': '1500'}], [{'transport_id': '39', 'Max. Speed': '1100'}]]
     
+    s.fastest_person_with_v()
+    # Returns [{'Name': 'Zam Wesell', 'Max. Speed': 800, 'Vehicle name': 'Koro-2 Exodrive airspeeder'}]
     
-    
+To access resources it is better instantiate the main object GetStars as:
+        
+        s = GetStars()
 
+After instatiate the GetStars object accessing methods is simple as:
+
+        s.find_fastest_s()   # this method finds the fastest StarShips
+        
+        s.vehicles_speed_by_person(1)   # this method gets the vehicles driven and its speed by person's id passed as argument     
+    
+    
+All functions are available in documentation - [https://dev.douglaspetrin.com/starpy/](https://dev.douglaspetrin.com/starpy/)
 
 ## Want to contribute to this project?
 You are more than welcome! 
