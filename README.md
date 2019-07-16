@@ -1,4 +1,5 @@
 # StarPy - A Python Library for the SWAPI (Star Wars API)
+This project collects data from swapi.co
 
 ### Documentation
 
