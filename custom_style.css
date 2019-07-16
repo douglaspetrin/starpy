@@ -1,0 +1,50 @@
+body {
+	background-color: rgb(38, 50, 56);
+}
+h1, h3 a{
+	color: #fff !important;
+}
+li, ul a { color: #cccdd0; }
+
+li {
+padding: 5px;
+}
+
+h1 a:hover{
+	color: #E91E63 !important;
+}
+
+h2, h3 {
+	color: #03A9F4;
+}
+
+a:hover{
+	color: #E91E63 !important;
+}
+
+p {
+	color: #78909C;
+}
+
+.source summary {
+	color: #E91E63 !important;
+}
+code{
+    background-color: rgb(30,39,44) !important;
+	border-radius: 1px;
+	-webkit-box-shadow:1px 0px 4px 0px #000000 ;
+    -moz-box-shadow:1px 0px 4px 0px #000000 ;
+    box-shadow:1px 0px 4px 0px #000000 ;
+}
+span.ident {color: rgb(2, 138, 156)}
+
+span.hljs-title {color: rgb(18, 227, 255)}
+
+span.hljs-string {color: rgb(230, 203, 5);}
+span.hljs-keyword {color: #fff;}
+
+code.name.flex, span.hljs-keyword, span.hljs-params {
+color: rgb(215, 66, 245);
+}
+
+code.python.hljs { color:#fff}

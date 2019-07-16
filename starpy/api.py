@@ -42,7 +42,7 @@ class StarPyMae(object):
 
 
 class GetStars(StarPyMae):
-    """ Herda varíaveis e métodos da classe StarPyMae """
+    """ Herda variáveis e métodos da classe StarPyMae """
 
     def _get_people(self, res=None):
         """ Recebe primeira página do endpoint people se não for passado argumento res.
@@ -50,7 +50,7 @@ class GetStars(StarPyMae):
         return self._sget(self._PEOPLE, res)
 
     def get_people_by_id(self, rid):
-        """ Recebe people por id
+        """ Recebe people por id \n
         :param rid :type int
         """
         return self._get_people(rid)
@@ -64,7 +64,7 @@ class GetStars(StarPyMae):
         return self._get_transport(self._VEHICLES, res)
 
     def get_vehicles_by_id(self, rid):
-        """ Recebe vehicles por id
+        """ Recebe vehicles por id \n
         :param rid :type int
         """
         return self._get_vehicles(rid)
@@ -74,7 +74,7 @@ class GetStars(StarPyMae):
         return self._get_transport(self._STAR_SHIPS, res)
 
     def get_starships_by_id(self, rid):
-        """ Recebe starships por id
+        """ Recebe starships por id \n
         :param rid :type: int
         :return:
         """
@@ -95,7 +95,7 @@ class GetStars(StarPyMae):
         return v
 
     def _find_pilots_from_df(self, transport):
-        """ Procura pilotos em tipo de transport requisitado
+        """ Procura pilotos em tipo de transport requisitado \n
         :param transport :type str
         :return list
         """
@@ -162,7 +162,7 @@ class GetStars(StarPyMae):
         """ Cria DataFrame para fácil manipulação. \n
             Remove strings da coluna de vel. máx e add valor zero. \n
             Transforma coluna vel. máx para número \n
-        :param transport :type str
+        :param transport :type str \n
         :return df :type dataframe
          """
         l2 = self._find_pilots_from_df(transport)
@@ -174,7 +174,7 @@ class GetStars(StarPyMae):
     def _url_of_fastest_pilot(self, transport):
         """ Gera lista das urls dos pilotos mais rápidos \n
             Ex. de retorno: url_list:  ['https://swapi.co/api/people/35/', 'https://swapi.co/api/people/10/'] \n
-        :param transport :type str
+        :param transport :type str \n
         :return df :type list
         """
         fastest = self._find_fastest_speed(transport)
@@ -226,7 +226,7 @@ class GetStars(StarPyMae):
 
     def _names_pilots(self, transport):
         """ Retorna nome dos pilotos mais rapidos \n
-        :param transport :type str
+        :param transport :type str \n
         :return list
         """
         l_ids, l_names = self._id_fastest_pilots(transport), []
@@ -243,7 +243,7 @@ class GetStars(StarPyMae):
 
     def _name_and_max_speed(self, transport):
         """ Procura nome e vel. máx conforme tipo de transport \n
-        :param transport :type str
+        :param transport :type str \n
         :return list
         """
         n, sp, lis = self._names_pilots(transport), list(self._find_fastest_speed(transport).values()), []
@@ -264,8 +264,8 @@ class GetStars(StarPyMae):
 
     def _by_idpeople_return_transport_speed(self, transport, idname):
         """ Retorna vel. máx por tipo de transport \n
-        :param transport, idname
-        :type str, int
+        :param transport, idname \n
+        :type str, int \n
         :return list
          """
         lss, transport_urls_id = [], self.get_people_by_id(idname)[transport]
