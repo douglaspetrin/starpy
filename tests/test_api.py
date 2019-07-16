@@ -35,7 +35,100 @@ class TestApi(unittest.TestCase):
 
     def test__find_pilots_from_df(self):
         self.assertRaises(Exception, self.s._find_pilots_from_df, self.ha)
-        self.assertRaises(Exception, self.s._find_pilots_from_df, self.ha)
+        self.assertIs(type(self.s._find_pilots_from_df(self.s._STAR_SHIPS)), list)
+
+    def test_find_pilots_from_v(self):
+        self.assertRaises(Exception, self.s.find_pilots_from_v, self.ha)
+        self.assertIs(type(self.s.find_pilots_from_v()), list)
+
+    def test_find_pilots_from_s(self):
+        self.assertRaises(Exception, self.s.find_pilots_from_s, self.ha)
+        self.assertIs(type(self.s.find_pilots_from_s()), list)
+
+    def test__find_fastest_transport_name_and_its_speed(self):
+        self.assertRaises(Exception, self.s._find_fastest_transport_name_and_its_speed, self.ha)
+        self.assertIs(type(self.s._find_fastest_transport_name_and_its_speed(self.s._VEHICLES)), tuple)
+
+    def test__find_fastest_speed(self):
+        self.assertRaises(Exception, self.s._find_fastest_speed, self.ha)
+        self.assertIs(type(self.s._find_fastest_speed(self.s._VEHICLES)), dict)
+
+    def test__find_fastest_trans_name(self):
+        self.assertRaises(Exception, self.s._find_fastest_trans_name, self.ha)
+        self.assertIs(type(self.s._find_fastest_trans_name(self.s._VEHICLES)), list)
+
+    def test_find_fastest_v(self):
+        self.assertRaises(Exception, self.s.find_fastest_v, self.ha)
+        self.assertIs(type(self.s.find_fastest_v()), dict)
+
+    def test__df_of_transport(self):
+        import pandas as pd
+        self.assertRaises(Exception, self.s._df_of_transport, self.ha)
+        self.assertIs(type(self.s._df_of_transport(self.s._VEHICLES)), pd.DataFrame)
+
+    def test__url_of_fastest_pilot(self):
+        self.assertRaises(Exception, self.s._url_of_fastest_pilot, self.ha)
+        self.assertIs(type(self.s._url_of_fastest_pilot(self.s._VEHICLES)), list)
+
+    def test__get_transport(self):
+        self.assertRaises(Exception, self.s._get_transport, self.ha)
+        self.assertIs(type(self.s._get_transport(self.s._VEHICLES)), dict)
+
+    def test__url_fastest_pilots_v(self):
+        self.assertRaises(Exception, self.s._url_fastest_pilots_v, self.ha)
+        self.assertIs(type(self.s._url_fastest_pilots_v()), list)
+
+    def test__url_fastest_pilot_v(self):
+        self.assertRaises(Exception, self.s._url_fastest_pilot_v, self.ha)
+        self.assertIs(type(self.s._url_fastest_pilot_v()), str)
+
+    def test__url_fastest_pilots_s(self):
+        self.assertRaises(Exception, self.s._url_fastest_pilots_s, self.ha)
+        self.assertIs(type(self.s._url_fastest_pilots_s()), list)
+
+    def test__id_fastest_pilots(self):
+        self.assertRaises(Exception, self.s._id_fastest_pilots, self.ha)
+        self.assertIs(type(self.s._id_fastest_pilots(self.s._VEHICLES)), list)
+
+    def test_id_fastest_pilots_v(self):
+        self.assertRaises(Exception, self.s.id_fastest_pilots_v, self.ha)
+        self.assertIs(type(self.s.id_fastest_pilots_v()), list)
+
+    def test_id_fastest_pilot_v(self):
+        self.assertRaises(Exception, self.s.id_fastest_pilot_v, self.ha)
+        self.assertIs(type(self.s.id_fastest_pilot_v()), str)
+
+    def test_id_fastest_pilots_s(self):
+        self.assertRaises(Exception, self.s.id_fastest_pilots_s, self.ha)
+        self.assertIs(type(self.s.id_fastest_pilots_s()), list)
+
+    def test_id_fastest_pilot_s(self):
+        self.assertRaises(Exception, self.s.id_fastest_pilot_s, self.ha)
+        self.assertIs(type(self.s.id_fastest_pilot_s()), str)
+
+    def test__names_pilots(self):
+        self.assertRaises(Exception, self.s._names_pilots, self.ha)
+        self.assertIs(type(self.s._names_pilots(self.s._STAR_SHIPS)), list)
+
+    def test_names_pilots_v(self):
+        self.assertRaises(Exception, self.s.names_pilots_v, self.ha)
+        self.assertIs(type(self.s.names_pilots_v()), list)
+
+    def test_names_pilots_s(self):
+        self.assertRaises(Exception, self.s.names_pilots_s, self.ha)
+        self.assertIs(type(self.s.names_pilots_s()), list)
+
+    def test__name_and_max_speed(self):
+        self.assertRaises(Exception, self.s._name_and_max_speed, self.ha)
+        self.assertIs(type(self.s._name_and_max_speed(self.s._STAR_SHIPS)), list)
+
+    def test_name_and_max_speed_v(self):
+        self.assertRaises(Exception, self.s.name_and_max_speed_v, self.ha)
+        self.assertIs(type(self.s.name_and_max_speed_v()), list)
+
+    def test_name_and_max_speed_s(self):
+        self.assertRaises(Exception, self.s.name_and_max_speed_s, self.ha)
+        self.assertIs(type(self.s.name_and_max_speed_s()), list)
 
     def test__get_transport(self):
         self.assertRaises(Exception, self.s._get_transport, self.ha)
