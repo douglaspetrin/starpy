@@ -60,27 +60,27 @@ To run tests from terminal:
     python3 -m unittest tests\test_api.py
 
 ## Basic Usage   
+```python
+from starpy.api import GetStars
 
-    from starpy.api import GetStars
+s = GetStars()
 
-    s = GetStars()
-    
-    s.starships_speed_by_person(11)    
-    # Returns [[{'transport_id': '59', 'Max. Speed': '1050'}], [{'transport_id': '65', 'Max. Speed': '1500'}], [{'transport_id': '39', 'Max. Speed': '1100'}]]
-    
-    s.fastest_person_with_v()
-    # Returns [{'Name': 'Zam Wesell', 'Max. Speed': 800, 'Vehicle name': 'Koro-2 Exodrive airspeeder'}]
-    
+s.starships_speed_by_person(11)    
+# Returns [[{'transport_id': '59', 'Max. Speed': '1050'}], [{'transport_id': '65', 'Max. Speed': '1500'}], [{'transport_id': '39', 'Max. Speed': '1100'}]]
+
+s.fastest_person_with_v()
+# Returns [{'Name': 'Zam Wesell', 'Max. Speed': 800, 'Vehicle name': 'Koro-2 Exodrive airspeeder'}]
+```
 To access resources it is better instantiate the main object GetStars as:
-        
-        s = GetStars()
-
+```python     
+s = GetStars()
+```
 After instatiate the GetStars object accessing methods is simple as:
+```python
+s.find_fastest_s()   # this method finds the fastest StarShips
 
-        s.find_fastest_s()   # this method finds the fastest StarShips
-        
-        s.vehicles_speed_by_person(1)   # this method gets the vehicles driven and its speed by person's id passed as argument     
-    
+s.vehicles_speed_by_person(1)   # this method gets the vehicles driven and its speed by person's id passed as argument     
+```    
     
 All functions are available in documentation - [https://dev.douglaspetrin.com/starpy/](https://dev.douglaspetrin.com/starpy/)
 
