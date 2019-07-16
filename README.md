@@ -13,19 +13,9 @@ For more articles visit the blog:
 
 ## Installation
 
-From Windows you can run:
+It is better create a virtual env and then install the project by running:
 
-#### `python3 -m venv venv`
-#### `venv/Scripts/activate`
-#### `pip3 install -r requirements.txt`
-
-##
-
-From Linux you can run:
-
-#### `make init`
-#### `source venv/bin/activate`
-#### `make install`  
+    pip3 install -r requirements.txt
 
 
 # StarPy Command Line Interface (CLI)  
