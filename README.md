@@ -71,11 +71,11 @@ s.starships_speed_by_person(11)
 s.fastest_person_with_v()
 # Returns [{'Name': 'Zam Wesell', 'Max. Speed': 800, 'Vehicle name': 'Koro-2 Exodrive airspeeder'}]
 ```
-To access resources it is better instantiate the main object GetStars as:
+To access resources it is better to instantiate the main class GetStars as:
 ```python     
 s = starpy.GetStars()
 ```
-After instatiate the GetStars object accessing methods is simple as:
+After instatiate the GetStars object accessing methods are simple as below:
 ```python
 s.find_fastest_s()   # this method finds the fastest StarShips
 
