@@ -79,7 +79,7 @@ After instatiate the GetStars object accessing methods are simple as below:
 ```python
 s.find_fastest_s()   # this method finds the fastest StarShips
 
-s.vehicles_speed_by_person(1)   # this method gets the vehicles driven and its speed by person's id passed as argument     
+s.vehicles_speed_by_person(1)   # this method gets the vehicles and its speed by passing a person's id as argument     
 ```    
     
 All functions are available in documentation - [https://dev.douglaspetrin.com/starpy/](https://dev.douglaspetrin.com/starpy/)
