@@ -313,7 +313,7 @@ class GetStars(StarPyMae):
         return self._fastest_person(self._STAR_SHIPS)
 
     def l(self, data):
-        """ Aux """
+        """ Auxiliary method """
         return range(len(data))
 
 
