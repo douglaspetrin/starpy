@@ -46,7 +46,7 @@ class GetStars(StarPyMae):
 
     def _get_people(self, res=None):
         """ Gets the first page of people's endpoint if the parameter res is passed as None \n
-            otherwise it returns data a specific person's id.
+            otherwise it returns data from a specific person's id.
         """
         return self._sget(self._PEOPLE, res)
 
@@ -106,7 +106,7 @@ class GetStars(StarPyMae):
         page, li2 = 1, []
         while v['next'] is not None:
             v = v['results']
-            for i in range(len(v)):
+            for i in self.l(v):
                 if v[i]['pilots'] and v[i]['max_atmosphering_speed']:
                     lista = v[i]['pilots'], v[i]['name'], v[i]['max_atmosphering_speed']
                     li2.append(lista)
@@ -114,7 +114,7 @@ class GetStars(StarPyMae):
             v = self._get_next_page(transport, page)
 
         v = self._get_next_page(transport, page)['results']
-        for j in range(len(v)):
+        for j in self.l(v):
             if v[j]['pilots'] and v[j]['max_atmosphering_speed']:
                 lista = v[j]['pilots'], v[j]['name'], v[j]['max_atmosphering_speed']
                 li2.append(lista)
@@ -135,7 +135,7 @@ class GetStars(StarPyMae):
         """
         df = self._df_of_transport(transport)
         f, kl = df[2].nlargest(3), []
-        for i in range(len(f)):
+        for i in self.l(f):
             n_index = f.index[i]
             n_transporte = df[1][n_index]
             kl.append(n_transporte)
@@ -183,7 +183,7 @@ class GetStars(StarPyMae):
         fastest = self._find_fastest_speed(transport)
         fastest, url_list = list(fastest.keys()), []
         df = self._df_of_transport(transport)
-        for i in range(len(fastest)):
+        for i in self.l(fastest):
             n = fastest[i]
             url_list.append(df[0][n][0])
         return url_list
@@ -210,7 +210,7 @@ class GetStars(StarPyMae):
         :return list
         """
         pilot_id, il = self._url_of_fastest_pilot(transport), []
-        for i in range(len(pilot_id)):
+        for i in self.l(pilot_id):
             pid = pilot_id[i].split('/')[-2]
             il.append(pid)
         return il
@@ -237,7 +237,7 @@ class GetStars(StarPyMae):
         :return list
         """
         l_ids, l_names = self._id_fastest_pilots(transport), []
-        for i in range(len(l_ids)):
+        for i in self.l(l_ids):
             name = self.get_person_by_id(int(l_ids[i]))['name']
             l_names.append(name)
         return l_names
@@ -258,7 +258,7 @@ class GetStars(StarPyMae):
         n, sp, lis = self._pilot_names(transport), list(self._find_fastest_speed(transport).values()), []
         trans = self._find_fastest_trans_name(transport)
         transport_name = transport.capitalize()[:-1] + ' name'
-        for i in range(len(n)):
+        for i in self.l(n):
             li = [{'Name': n[i], 'Max. Speed': sp[i], transport_name: trans[i]}]
             lis.append(li)
         return lis
@@ -278,7 +278,7 @@ class GetStars(StarPyMae):
         :return list
          """
         lss, transport_urls_id = [], self.get_person_by_id(idname)[transport]
-        for i in range(len(transport_urls_id)):
+        for i in self.l(transport_urls_id):
             url_id = transport_urls_id[i].split('/')[-2]
             speed = self._by_idtransports_return_its_speed(transport, url_id)
             l_data = [{'transport_id': url_id, 'Max. Speed': speed}]
@@ -311,6 +311,10 @@ class GetStars(StarPyMae):
         """ Returns fastest person's name, its transport's name and its max. \n
             speed reached driving StarShips """
         return self._fastest_person(self._STAR_SHIPS)
+
+    def l(self, data):
+        """ Aux """
+        return range(len(data))
 
 
 if __name__ == '__main__':
