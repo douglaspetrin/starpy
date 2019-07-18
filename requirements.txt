@@ -1,3 +1,3 @@
-pandas
-requests
-fire
+pandas==0.24.2
+requests==2.22.0
+fire==0.1.3
