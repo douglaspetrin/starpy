@@ -15,14 +15,14 @@ For more articles visit the blog:
 
 It is better to create a virtual env and then install the project by running:
 
-    pip3 install -r requirements.txt
+    $ pip3 install -r requirements.txt
 
 
 # StarPy Command Line Interface (CLI)  
 
 From the command line, you can run:
 ```bash 
-    python start.py command arg 
+$ python start.py command arg 
 ```      
 Examples: 
 ```bash  
@@ -57,7 +57,7 @@ Examples:
 
 To run tests from terminal: 
 ```bash
-    python3 -m unittest tests\test_api.py
+$ python3 -m unittest tests\test_api.py
 ```
 ## Basic Usage   
 ```python
