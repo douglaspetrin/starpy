@@ -6,8 +6,7 @@ class StarPyMae(object):
 
     """
     Main Class \n
-    Description: Makes the api call for data manipulation. \ n
-
+    Description: Makes the api call for data manipulation. \n
     """
 
     # Endpoints
@@ -30,10 +29,11 @@ class StarPyMae(object):
         else:
             end, r = '%s/%s/%s/', (self._base_url, endpoint, resource)
         re = requests.get(end % r)
-        if re.ok and re.status_code == 200:
+        if re.status_code == 200:
             re = re.json()
         else:
-            raise Exception('Not found or invalid. Try again with a different one!')
+            raise Exception('Not found or invalid request. Try again with a different one!')
+
         return re
 
     def _get_next_page(self, endpoint, i):
@@ -85,6 +85,7 @@ class GetStars(StarPyMae):
 
     def _if_transport(self, transport):
         """ It checks which kind of transport is passed as argument to the next methods\n
+            and returns data from first page of it.
         :param transport :type str \n
         :return dict
         """
@@ -97,8 +98,8 @@ class GetStars(StarPyMae):
             raise Exception('Choose between self._VEHICLES or self._STAR_SHIPS')
         return v
 
-    def _find_pilots_from_df(self, transport):
-        """ Find pilots from pandas DataFrame depending on transport's type passed as argument \n
+    def _find_pilots_to_list(self, transport):
+        """ Find pilots and append to a list depending on type of transport passed as argument \n
         :param transport :type str \n
         :return list
         """
@@ -122,11 +123,11 @@ class GetStars(StarPyMae):
 
     def find_pilots_from_v(self):
         """ Finds vehicle pilots """
-        return self._find_pilots_from_df(self._VEHICLES)
+        return self._find_pilots_to_list(self._VEHICLES)
 
     def find_pilots_from_s(self):
         """ Finds star ship pilots """
-        return self._find_pilots_from_df(self._STAR_SHIPS)
+        return self._find_pilots_to_list(self._STAR_SHIPS)
 
     def _find_fastest_transport_name_and_its_speed(self, transport):
         """ Finds the fastest transport name and its speed \n
@@ -168,7 +169,7 @@ class GetStars(StarPyMae):
         :param transport :type str \n
         :return df :type pandas DataFrame
          """
-        l2 = self._find_pilots_from_df(transport)
+        l2 = self._find_pilots_to_list(transport)
         df = pd.DataFrame(l2)
         df[2].replace(regex=True, inplace=True, to_replace='\D', value=r'0')
         df[2] = pd.to_numeric(df[2])
@@ -318,6 +319,7 @@ class GetStars(StarPyMae):
 
 
 if __name__ == '__main__':
+    s = GetStars()
     print('\n===== Lets begin the search ===== '
           '\n StarPy | Star Wars with Python'
           '\n=================================')

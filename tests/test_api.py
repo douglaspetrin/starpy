@@ -3,6 +3,7 @@ from starpy.api import GetStars
 
 
 class TestApi(unittest.TestCase):
+    """ Tests with unittest """
 
     def setUp(self):
         self.s = GetStars()
@@ -34,8 +35,8 @@ class TestApi(unittest.TestCase):
         self.assertIs(type(self.s._if_transport(self.s._VEHICLES)), dict)
 
     def test__find_pilots_from_df(self):
-        self.assertRaises(Exception, self.s._find_pilots_from_df, self.ha)
-        self.assertIs(type(self.s._find_pilots_from_df(self.s._STAR_SHIPS)), list)
+        self.assertRaises(Exception, self.s._find_pilots_to_list, self.ha)
+        self.assertIs(type(self.s._find_pilots_to_list(self.s._STAR_SHIPS)), list)
 
     def test_find_pilots_from_v(self):
         self.assertRaises(Exception, self.s.find_pilots_from_v, self.ha)
