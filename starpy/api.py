@@ -119,6 +119,7 @@ class GetStars(StarPyMae):
             if v[j]['pilots'] and v[j]['max_atmosphering_speed']:
                 lista = v[j]['pilots'], v[j]['name'], v[j]['max_atmosphering_speed']
                 li2.append(lista)
+        print('_find_pilots_to_list: li2 ', li2)
         return li2
 
     def find_pilots_from_v(self):
@@ -169,10 +170,11 @@ class GetStars(StarPyMae):
         :param transport :type str \n
         :return df :type pandas DataFrame
          """
-        l2 = self._find_pilots_to_list(transport)
-        df = pd.DataFrame(l2)
+        l3 = self._find_pilots_to_list(transport)
+        df = pd.DataFrame(l3)
         df[2].replace(regex=True, inplace=True, to_replace='\D', value=r'0')
         df[2] = pd.to_numeric(df[2])
+        print('_df_of_transport df: ', df)
         return df
 
     def _url_of_fastest_pilot(self, transport):
