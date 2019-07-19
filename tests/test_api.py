@@ -92,48 +92,53 @@ class TestApi(unittest.TestCase):
         self.assertIs(type(self.s._id_fastest_pilots(self.s._VEHICLES)), list)
 
     def test_id_fastest_pilots_v(self):
-        self.assertRaises(Exception, self.s.id_fastest_pilots_v, self.ha)
-        self.assertIs(type(self.s.id_fastest_pilots_v()), list)
+        return self.is_raises(self.s.id_fastest_pilots_v,
+                              self.s.id_fastest_pilots_v(), list)
 
     def test_id_fastest_pilot_v(self):
-        self.assertRaises(Exception, self.s.id_fastest_pilot_v, self.ha)
-        self.assertIs(type(self.s.id_fastest_pilot_v()), str)
+        return self.is_raises(self.s.id_fastest_pilot_v,
+                              self.s.id_fastest_pilot_v(), str)
 
     def test_id_fastest_pilots_s(self):
-        self.assertRaises(Exception, self.s.id_fastest_pilots_s, self.ha)
-        self.assertIs(type(self.s.id_fastest_pilots_s()), list)
+        return self.is_raises(self.s.id_fastest_pilots_s,
+                              self.s.id_fastest_pilots_s(), list)
 
     def test_id_fastest_pilot_s(self):
-        self.assertRaises(Exception, self.s.id_fastest_pilot_s, self.ha)
-        self.assertIs(type(self.s.id_fastest_pilot_s()), str)
+        return self.is_raises(self.s.id_fastest_pilot_s,
+                              self.s.id_fastest_pilot_s(), str)
 
     def test__pilot_names(self):
-        self.assertRaises(Exception, self.s._pilot_names, self.ha)
-        self.assertIs(type(self.s._pilot_names(self.s._STAR_SHIPS)), list)
+        return self.is_raises(self.s._pilot_names,
+                              self.s._pilot_names(self.s._STAR_SHIPS), list)
 
     def test_pilot_names_v(self):
-        self.assertRaises(Exception, self.s.pilot_names_v, self.ha)
-        self.assertIs(type(self.s.pilot_names_v()), list)
+        return self.is_raises(self.s.pilot_names_v,
+                              self.s.pilot_names_v(), list)
 
     def test_pilot_names_s(self):
-        self.assertRaises(Exception, self.s.pilot_names_s, self.ha)
-        self.assertIs(type(self.s.pilot_names_s()), list)
+        return self.is_raises(self.s.pilot_names_s,
+                              self.s.pilot_names_s(), list)
 
-    def test__name_and_max_speed(self):
-        self.assertRaises(Exception, self.s._name_and_max_speed, self.ha)
-        self.assertIs(type(self.s._name_and_max_speed(self.s._STAR_SHIPS)), list)
+    def test_name_and_max_speed(self):
+        return self.is_raises(self.s._name_and_max_speed,
+                              self.s._name_and_max_speed(self.s._STAR_SHIPS), list)
 
     def test_name_and_max_speed_v(self):
-        self.assertRaises(Exception, self.s.name_and_max_speed_v, self.ha)
-        self.assertIs(type(self.s.name_and_max_speed_v()), list)
+        return self.is_raises(self.s.name_and_max_speed_v,
+                              self.s.name_and_max_speed_v(), list)
 
     def test_name_and_max_speed_s(self):
-        self.assertRaises(Exception, self.s.name_and_max_speed_s, self.ha)
-        self.assertIs(type(self.s.name_and_max_speed_s()), list)
+        return self.is_raises(self.s.name_and_max_speed_s,
+                              self.s.name_and_max_speed_s(), list)
 
     def test__get_transport(self):
         self.assertRaises(Exception, self.s._get_transport, self.ha)
         self.assertIs(type(self.s._get_transport(self.s._VEHICLES)), dict)
+
+    def is_raises(self, argA, argB, argC):
+        """ Method auxiliary for assertRaises and assertIs """
+        self.assertRaises(Exception, argA, self.ha)
+        self.assertIs(type(argB), argC)
 
 
 if __name__ == '__main__':
