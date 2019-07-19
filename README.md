@@ -13,8 +13,8 @@ For more articles visit the blog:
 
 ## Installation
 
-It is better to create a virtual env and then install the project by running:
-
+    $ python3 -m venv venv
+    $ source venv/bin/activate
     $ pip3 install -r requirements.txt
 
 
