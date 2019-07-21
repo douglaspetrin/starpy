@@ -38,6 +38,8 @@ Examples:
              start.py find-fastest-v
              start.py find-pilots-from-s
              start.py find-pilots-from-v
+             start.py find-slowest-s
+             start.py find-slowest-v
              start.py get-person-by-id <id>
              start.py get-starships-by-id <id>
              start.py get-vehicles-by-id <id>
