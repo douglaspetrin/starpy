@@ -131,6 +131,18 @@ class TestApi(unittest.TestCase):
         return self.is_raises(self.s.name_and_max_speed_s,
                               self.s.name_and_max_speed_s(), list)
 
+    def test__find_slowest_speed(self):
+        return self.is_raises(self.s._find_slowest_speed,
+                              self.s._find_slowest_speed(self.s._VEHICLES), dict)
+
+    def test_find_slowest_s(self):
+        return self.is_raises(self.s.find_slowest_s,
+                              self.s.find_slowest_s(), dict)
+
+    def test_find_slowest_v(self):
+        return self.is_raises(self.s.find_slowest_v,
+                              self.s.find_slowest_v(), dict)
+
     def test__get_transport(self):
         self.assertRaises(Exception, self.s._get_transport, self.ha)
         self.assertIs(type(self.s._get_transport(self.s._VEHICLES)), dict)

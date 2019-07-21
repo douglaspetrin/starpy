@@ -129,18 +129,44 @@ class GetStars(StarPyMae):
         """ Finds star ship pilots """
         return self._find_pilots_to_list(self._STAR_SHIPS)
 
-    def _find_fastest_transport_name_and_its_speed(self, transport):
-        """ Finds the fastest transport name and its speed \n
+    def _find_x_transport_name_and_its_speed(self, transport, sp):
+        """
         :param transport :type str \n
         :return list, dict
         """
         df = self._df_of_transport(transport)
-        f, kl = df[2].nlargest(3), []
+        kl = []
+        if sp == 'fastest':
+            f = df[2].nlargest(3)
+        else:
+            f = df[2].nsmallest(3)
         for i in self.l(f):
             n_index = f.index[i]
             n_transporte = df[1][n_index]
             kl.append(n_transporte)
         return kl, f.to_dict()
+
+
+    def _find_fastest_transport_name_and_its_speed(self, transport):
+        """ Finds the fastest transport name and its speed \n
+        :param transport :type str \n
+        :return list, dict
+        """
+        return self._find_x_transport_name_and_its_speed(transport, sp='fastest')
+
+    def _find_slowest_transport_name_and_its_speed(self, transport):
+        """ Finds the slowest transport name and its speed \n
+        :param transport :type str \n
+        :return list, dict
+        """
+        return self._find_x_transport_name_and_its_speed(transport, sp='slowest')
+
+    def _find_slowest_speed(self, transport):
+        """ Finds slowest transport and returns its speed depending on the parameter passed. \n
+            Ex: self._VEHICLES or self.STAR_SHIPS \n
+        :param transport :type str
+        """
+        return self._find_slowest_transport_name_and_its_speed(transport)[1]
 
     def _find_fastest_speed(self, transport):
         """ Finds fastest transport and returns its speed depending on the parameter passed. \n
@@ -160,9 +186,17 @@ class GetStars(StarPyMae):
         """ Finds the fastest vehicles with at least one pilot associated to it """
         return self._find_fastest_speed(self._VEHICLES)
 
+    def find_slowest_v(self):
+        """ Finds the slowest vehicles with at least one pilot associated to it """
+        return self._find_slowest_speed(self._VEHICLES)
+
     def find_fastest_s(self):
         """ Finds the fastest star ships with at least one pilot associated to it """
         return self._find_fastest_speed(self._STAR_SHIPS)
+
+    def find_slowest_s(self):
+        """ Finds the slowest star ships with at least one pilot associated to it """
+        return self._find_slowest_speed(self._STAR_SHIPS)
 
     def _df_of_transport(self, transport):
         """ Creates pandas DataFrame to easier data manipulation. \n
