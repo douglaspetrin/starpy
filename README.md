@@ -59,7 +59,7 @@ Examples:
 
 To run tests from terminal: 
 ```bash
-$ python3 -m unittest tests\test_api.py
+$ python3 -m unittest tests/test_api.py
 ```
 ## Basic Usage   
 ```python
