@@ -2,7 +2,7 @@ import requests
 import pandas as pd
 
 
-class StarPyMae(object):
+class StarPyMae:
 
     """
     Main Class \n
@@ -28,13 +28,13 @@ class StarPyMae(object):
             end, r = '%s/%s', (self._base_url, endpoint)
         else:
             end, r = '%s/%s/%s/', (self._base_url, endpoint, resource)
-        re = requests.get(end % r)
-        if re.status_code == 200:
-            re = re.json()
+        response = requests.get(end % r)
+        if response.status_code == 200:
+            response = response.json()
         else:
             raise Exception('Not found or invalid request. Try again with a different one!')
 
-        return re
+        return response
 
     def _get_next_page(self, endpoint, i):
         """ Gets new/next page for manipulation """
@@ -89,14 +89,14 @@ class GetStars(StarPyMae):
         :param transport :type str \n
         :return dict
         """
-        v = None
+        vehicles = None
         if transport == self._VEHICLES:
-            v = self._get_vehicles()
+            vehicles = self._get_vehicles()
         if transport == self._STAR_SHIPS:
-            v = self._get_starships()
-        if v is None:
+            vehicles = self._get_starships()
+        if vehicles is None:
             raise Exception('Choose between self._VEHICLES or self._STAR_SHIPS')
-        return v
+        return vehicles
 
     def _find_pilots_to_list(self, transport):
         """ Find pilots and append to a list depending on type of transport passed as argument \n
@@ -145,7 +145,6 @@ class GetStars(StarPyMae):
             n_transporte = df[1][n_index]
             kl.append(n_transporte)
         return kl, f.to_dict()
-
 
     def _find_fastest_transport_name_and_its_speed(self, transport):
         """ Finds the fastest transport name and its speed \n
