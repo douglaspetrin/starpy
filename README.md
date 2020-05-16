@@ -1,6 +1,9 @@
 # StarPy - A Python Library for the SWAPI (Star Wars API)
 This project collects data from swapi.co
 
+** It seems the resource used to collect data (swapi.co) no exist anymore (05/16/2020).  
+** If you have another resource to get data from and want to push a merge request, feel free and I am sure it will help others.
+
 ### Documentation
 
 Read the full documentation at:
@@ -15,8 +18,12 @@ For more articles visit the blog:
 
     $ python3 -m venv venv
     $ source venv/bin/activate
-    $ pip3 install -r requirements.txt
+    $ python3 -m pip install -r requirements.txt
 
+    If you do not have venv or pip3 installed in your machine and you are trying to run it on Ubuntu, you can install them:
+
+    ** Ubuntu: sudo apt-get install python3-venv
+    ** Ubuntu: sudo apt install python3-pip
 
 # StarPy Command Line Interface (CLI)  
 
@@ -26,10 +33,10 @@ $ python start.py command arg
 ```      
 Examples: 
 ```bash  
-             python start.py fastest-person-with-s
+             python3 start.py fastest-person-with-s
              --> Returns the fastest person driving a starship
              
-             python start.py vehicles-speed-by-person 1 
+             python3 start.py vehicles-speed-by-person 1 
              --> Returns Luke's vehicles and its max. speed
             
              start.py fastest-person-with-s
